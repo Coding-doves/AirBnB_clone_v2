@@ -63,7 +63,7 @@ sudo ln -sf $test $current
 
 sudo chown -R ubuntu:ubuntu /data/
 
-sudo wget -q -O $nginx http://exampleconfig.com/static/raw/nginx/ubuntu20.04/etc/nginx/sites-available/default
+sudo wget -q -O /etc/nginx/sites-available/default http://exampleconfig.com/static/raw/nginx/ubuntu20.04/etc/nginx/sites-available/default
 config="/etc/nginx/sites-available/default"
 echo 'Holberton School Hello World!' | sudo tee /var/www/html/index.html > /dev/null
 sudo sed -i '/^}$/i \ \n\tlocation \/redirect_me {return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;}' $config
