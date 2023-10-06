@@ -2,21 +2,24 @@
 '''
 Fabric script that generates a .tgz archive
 '''
+from fabric.decorators import runs_once
 from fabric.api import local
 from datetime import datetime
 
 
+@runs_once
 def do_pack():
     '''
     return the archive path if the archive has been correctly
-    generated. Otherwise, it should return None
+    generated. Otherwiss, it should return None
     '''
-    try:
-        local("mkdir -p versions")
-        timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
+    local("mkdir -p versions")
+    timestamp = ("versions/web_static_{}.tgz".format(
+            datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")))
 
-        local('tar -cvzf versions/{} web_static'.format(archive_name))
+    loc = local('tar -cvzf versions/{} web_static'.format(timestamp))
 
-        return "versions/{}".format(archive_name)
-    except Exception as e:
+    if loc.failed:
         return None
+    print("Path", path)
+    return timestamp

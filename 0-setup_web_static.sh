@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # web servers for the deployment of web_static
 # install nginx if not installed
-if ! command -v nginx &> /dev/null;
+if ! command -v nginx &> /dev/null
 then
 	sudo apt update
 	sudo apt install -y nginx
