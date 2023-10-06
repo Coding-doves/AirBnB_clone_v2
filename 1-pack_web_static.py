@@ -17,7 +17,7 @@ def do_pack():
     timestamp = ("versions/web_static_{}.tgz".format(
             datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")))
 
-    loc = local('tar -cvzf versions/{} web_static'.format(timestamp))
+    loc = local('tar -cvzf {} web_static'.format(timestamp))
 
     if loc.failed:
         return None
