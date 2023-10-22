@@ -8,7 +8,7 @@
         <ul>
             {% for state in states %}
                 <li>
-                    {{ state.id}}: <b>{{ state.name}}</b>
+                    {{ state.id }}: <b>{{ state.name }}</b>
                     <ul>
                         {% for city in state.cities %}
                             <li>{{ city.id }}: <b>{{ city.name }}</b></li>
