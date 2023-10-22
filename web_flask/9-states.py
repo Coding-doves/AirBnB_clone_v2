@@ -70,6 +70,15 @@ def list_cities():
     return render_template('8-cities_by_states.html', states=state)
 
 
+@app.route('/states', strict_slashes=False)
+def states():
+    """Display a HTML page with a list of all State objects"""
+
+    states = sorted(storage.all(State).values(), key=lambda x: x.name)
+
+    return render_template('states.html', states=states)
+
+
 @app.route('/states/<id>', strict_slashes=False)
 def state(state_id):
     """Display a HTML page with details of a specific State"""
@@ -81,6 +90,7 @@ def state(state_id):
         return render_template('9-states.html', state=state, cities=cities)
     else:
         return render_template('not_found.html')
+
 
 @app.teardown_appcontext
 def teardown_db(exception):
