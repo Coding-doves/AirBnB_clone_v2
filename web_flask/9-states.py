@@ -5,6 +5,7 @@ from flask import Flask, render_template
 from models import storage
 from models.state import State
 from models.city import City
+from uuid import UUID
 
 app = Flask(__name__)
 
@@ -82,8 +83,15 @@ def states():
 @app.route('/states/<id>', strict_slashes=False)
 def state(id):
     """Display a HTML page with details of a specific State"""
-
-    state = storage.get(State, id)
+    try:
+        id_int = int(id)
+        state = storage.get(State, id_int)
+    except ValueError:
+        try:
+            id_uuid = UUID(id)
+            state = storage.get(State, id_uuid)
+        except ValueError:
+            state = None
 
     if state:
         cities = sorted(state.cities, key=lambda x: x.name)
