@@ -64,6 +64,13 @@ def list_states():
     return render_template('7-states_list.html', states=state)
 
 
+@app.route('/cities_by_states', strict_slashes=False)
+def list_cities():
+    """List all states and their cities"""
+    state = sorted(storage.all(State).values(), key=lambda x: x.name)
+    # city = storage.all(City).values()
+    return render_template('8-cities_by_states.html', states=state)
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Remove the current SQLAlchemy Session."""
