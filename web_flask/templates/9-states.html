@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>States: {{ state.name}}</H1>
+        <H3>Cities:</H3>
+        <ul>
+            {% for city in cities %}
+                <li>{{ city.id }}: <b>{{ city.name }}</b></li>
+            {% endfor %}
+        </ul>
+    </BODY>
+</HTML>
