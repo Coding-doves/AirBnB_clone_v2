@@ -71,6 +71,7 @@ def list_cities():
     # city = storage.all(City).values()
     return render_template('8-cities_by_states.html', states=state)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """Remove the current SQLAlchemy Session."""
