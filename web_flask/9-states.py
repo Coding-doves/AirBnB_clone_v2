@@ -74,22 +74,22 @@ def list_cities():
 def states():
     """Display a HTML page with a list of all State objects"""
 
-    states = sorted(storage.all(State).values(), key=lambda x: x.name)
+    states = storage.all(State).values()
 
-    return render_template('states.html', states=states)
+    return render_template('7-states_list.html', states=states)
 
 
 @app.route('/states/<id>', strict_slashes=False)
-def state(state_id):
+def state(id):
     """Display a HTML page with details of a specific State"""
 
-    state = storage.get(State, state_id)
+    state = storage.get(State, id)
 
     if state:
         cities = sorted(state.cities, key=lambda x: x.name)
-        return render_template('9-states.html', state=state, cities=cities)
+        return render_template('8-cities_by_states.html', state=state, cities=cities)
     else:
-        return render_template('not_found.html')
+        return render_template('9-states.html')
 
 
 @app.teardown_appcontext
