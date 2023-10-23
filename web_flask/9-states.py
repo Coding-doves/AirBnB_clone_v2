@@ -72,21 +72,35 @@ def list_cities():
 
 
 @app.route('/states', strict_slashes=False)
-@app.route('/states/<id>', strict_slashes=False)
-def state(id=None):
-    """Display a HTML page with a list of all State objects"""
+def states_list():
+    """
+    Route that displays a list of all State objects
+    """
+    states = storage.all(State).values()
+    return render_template('7-states_list.html', states=states)
 
-    not_found = False
-    if id is not None:
-        states = storage.all(State, id)
-        _id = True
-        if len(states) == 0:
-            not_found = True
+
+@app.route('/states/<id>', strict_slashes=False)
+def _id(id):
+    """Display a HTML page with a list of all State objects"""
+    try:
+        # Try to parse the ID as an integer
+        id_int = int(id)
+        state = storage.get(State, id_int)
+    except ValueError:
+        # If parsing as an integer fails, try to parse as a UUID
+        try:
+            id_uuid = UUID(id)
+            state = storage.get(State, id_uuid)
+        except ValueError:
+            # If both attempts fail, set state to None
+            state = None
+
+    if state:
+        cities = sorted(state.cities, key=lambda city: city.name)
+        return render_template('8-cities_by_states.html', state=state, cities=cities)
     else:
-        states = storage.all(State)
-        _id = False
-    return render_template('9-states.html', states=states,
-                           _id=with_id, not_found=not_found)
+        return render_template('9-states.html')
 
 
 @app.teardown_appcontext
