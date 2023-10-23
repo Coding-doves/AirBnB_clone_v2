@@ -82,7 +82,23 @@ def states_list():
 
 @app.route('/states/<id>', strict_slashes=False)
 def _id(id):
-    """Display a HTML page with a list of all State objects"""
+    """Display a HTML page with a list of all State objects
+    try:
+        id_int = int(id)
+        state = storage.get(State, id_int)
+    except ValueError:
+        try:
+            id_uuid = UUID(id)
+            state = storage.get(State, id_uuid)
+        except ValueError:
+            state = None
+
+    if state:
+        cities = sorted(state.cities, key=lambda x: x.name)
+        return render_template('9-states.html', state=state, cities=cities)
+    else:
+        return render_template('9-states.html')
+    """
     try:
         # Try to parse the ID as an integer
         id_int = int(id)
@@ -98,11 +114,9 @@ def _id(id):
 
     if state:
         cities = sorted(state.cities, key=lambda city: city.name)
-        return render_template('8-cities_by_states.html', state=state, cities=cities)
+        return render_template('9-states.html', states={state.id: state}, with_id=True)
     else:
-        return render_template('9-states.html')
-
-
+        return render_template('9-states.html', not_found=True)
 @app.teardown_appcontext
 def teardown_db(exception):
     """Remove the current SQLAlchemy Session."""

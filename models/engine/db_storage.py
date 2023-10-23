@@ -94,6 +94,12 @@ class DBStorage:
 
         self.__session = scoped_session(session_fact)()
 
+    def get(self, cls, id):
+            """Retrieve an object from the database by class and id."""
+            if cls and id:
+                key = f"{cls.__name__}.{id}"
+                return self.__session.query(cls).get(key)
+            
     def close(self):
         """classes class session"""
         self.__session.close()
