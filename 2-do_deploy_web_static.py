@@ -10,28 +10,6 @@ from fabric.api import local, run, put, runs_once, env
 env.hosts = ["54.144.147.44", "54.90.42.81"]
 env.user = "ubuntu"
 
-def do_deploy():
-    """compressing the project"""
-    if not os.path.isdir("versions"):
-        os.mkdir("versions")
-
-    current_time = datetime.now()
-    outpt = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-            current_time.year, current_time.month,
-            current_time.day, current_time.hour,
-            current_time.minute, current_time.second
-        )
-    try:
-        print("Packing web_static to {}".format(outpt))
-        local("tar -cvzf {} web_static".format(outpt))
-        archive_size = os.stat(outpt).st_size
-        print("web_static packed: {} -> {} Bytes".format(outpt, archive_size))
-    except Exception as e:
-        print(e)
-        outpt = None
-
-    return outpt
-
 
 def do_deploy(archive_path):
     """ comment """

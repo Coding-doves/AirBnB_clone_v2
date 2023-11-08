@@ -116,7 +116,7 @@ def _id(id):
         cities = sorted(state.cities, key=lambda city: city.name)
         return render_template('9-states.html', states={state.id: state}, with_id=True)
     else:
-        return render_template('9-states.html', not_found=True)
+        return render_template('9-states.html', not_found=True, states={})
 @app.teardown_appcontext
 def teardown_db(exception):
     """Remove the current SQLAlchemy Session."""
